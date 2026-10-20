@@ -1,0 +1,518 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Fourting Groud</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Marcellus&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: slim sticky header; hero splits into the pitch and a live order panel that builds the WhatsApp message; then price grid, four-step process, FAQ, contact. Dark-first, brass accent used only for actions and key numbers. */
+:root {
+  --bg: #0c1118;
+  --surface: #121a24;
+  --surface-2: #182231;
+  --line: #243246;
+  --fg: #eef1f5;
+  --muted: #93a1b5;
+  --accent: #d4af6a;
+  --accent-ink: #1a1406;
+  --accent-soft: rgba(212, 175, 106, 0.13);
+  --font-display: "Marcellus", "Times New Roman", serif;
+  --font-body: "Manrope", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  color-scheme: dark;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #f4f5f7;
+    --surface: #ffffff;
+    --surface-2: #eceff3;
+    --line: #d7dce4;
+    --fg: #101722;
+    --muted: #566377;
+    --accent: #8f6a1f;
+    --accent-ink: #ffffff;
+    --accent-soft: rgba(143, 106, 31, 0.1);
+    color-scheme: light;
+  }
+}
+:root[data-theme="light"] {
+  --bg: #f4f5f7;
+  --surface: #ffffff;
+  --surface-2: #eceff3;
+  --line: #d7dce4;
+  --fg: #101722;
+  --muted: #566377;
+  --accent: #8f6a1f;
+  --accent-ink: #ffffff;
+  --accent-soft: rgba(143, 106, 31, 0.1);
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 auto;
+  height: env(safe-area-inset-top, 0px);
+  background: var(--bg);
+  z-index: 30;
+}
+a { color: inherit; }
+h1, h2, h3, p { margin: 0; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+.wrap {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+
+/* Header */
+.site-header {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 40;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+}
+.site-header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 12px; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; min-width: 0; }
+.brand svg { width: 30px; height: 30px; color: var(--accent); flex: none; }
+.brand span { font-family: var(--font-display); font-size: 1.3rem; letter-spacing: 0.02em; white-space: nowrap; }
+.nav { display: flex; align-items: center; gap: 26px; }
+.nav a.link { text-decoration: none; color: var(--muted); font-size: 0.92rem; font-weight: 500; transition: color 0.15s; }
+.nav a.link:hover { color: var(--fg); }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 12px 20px; border-radius: 10px; border: 1px solid transparent;
+  background: var(--accent); color: var(--accent-ink);
+  font: 700 0.95rem/1.2 var(--font-body); text-decoration: none; cursor: pointer;
+  transition: transform 0.15s, filter 0.15s;
+}
+.btn:hover { filter: brightness(1.08); }
+.btn:active { transform: translateY(1px); }
+.btn.ghost { background: transparent; color: var(--fg); border-color: var(--line); font-weight: 600; }
+.btn.ghost:hover { border-color: var(--accent); filter: none; }
+.btn.small { padding: 9px 14px; font-size: 0.88rem; }
+.btn.block { width: 100%; }
+
+@media (max-width: 760px) {
+  .nav a.link { display: none; }
+}
+
+/* Hero */
+.hero { position: relative; isolation: isolate; overflow: hidden; }
+.hero::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: radial-gradient(60% 70% at 88% 0%, var(--accent-soft), transparent 70%);
+}
+.hero::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; opacity: 0.4;
+  background:
+    linear-gradient(var(--line) 1px, transparent 1px) 0 0 / 56px 56px,
+    linear-gradient(90deg, var(--line) 1px, transparent 1px) 0 0 / 56px 56px;
+  -webkit-mask-image: linear-gradient(to bottom, #000, transparent 80%);
+  mask-image: linear-gradient(to bottom, #000, transparent 80%);
+}
+.hero .wrap {
+  display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: clamp(28px, 5vw, 64px); align-items: center;
+  padding-block: clamp(36px, 7vw, 84px);
+}
+@media (max-width: 880px) { .hero .wrap { grid-template-columns: minmax(0, 1fr); } }
+
+.eyebrow { font-size: 0.75rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+h1 {
+  font-family: var(--font-display); font-weight: 400;
+  font-size: clamp(2.3rem, 5.4vw, 4rem); line-height: 1.06; letter-spacing: -0.005em;
+  text-wrap: balance; margin-top: 14px;
+}
+h1 em { font-style: normal; color: var(--accent); }
+.lede { margin-top: 18px; max-width: 52ch; color: var(--muted); font-size: 1.05rem; }
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.facts {
+  display: flex; flex-wrap: wrap; gap: 8px 22px; margin: 30px 0 0; padding: 0; list-style: none;
+  color: var(--muted); font-size: 0.88rem;
+}
+.facts li { display: flex; align-items: center; gap: 8px; }
+.facts li::before { content: ""; width: 6px; height: 6px; background: var(--accent); transform: rotate(45deg); flex: none; }
+
+/* Order panel */
+.panel {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 16px;
+  padding: clamp(18px, 3vw, 26px); min-width: 0;
+  box-shadow: 0 24px 60px -30px rgba(0, 0, 0, 0.55);
+}
+.panel h2 { font-family: var(--font-display); font-weight: 400; font-size: 1.5rem; }
+.panel .sub { color: var(--muted); font-size: 0.88rem; margin-top: 2px; }
+.field-label { display: block; margin: 18px 0 8px; font-size: 0.8rem; font-weight: 600; color: var(--muted); letter-spacing: 0.04em; text-transform: uppercase; }
+.chips { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+@media (max-width: 420px) { .chips { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.chip {
+  position: relative; display: flex; flex-direction: column; gap: 2px;
+  padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px;
+  background: var(--surface-2); cursor: pointer; transition: border-color 0.15s, background 0.15s;
+}
+.chip input { position: absolute; inset: 0; opacity: 0; cursor: pointer; margin: 0; }
+.chip .amt { font-family: var(--font-mono); font-weight: 600; font-size: 1rem; }
+.chip .prc { font-size: 0.78rem; color: var(--muted); }
+.chip:hover { border-color: var(--muted); }
+.chip:has(input:checked) { border-color: var(--accent); background: var(--accent-soft); }
+.chip:has(input:focus-visible) { outline: 2px solid var(--accent); outline-offset: 2px; }
+.text-input {
+  width: 100%; padding: 12px 14px; border-radius: 10px; border: 1px solid var(--line);
+  background: var(--surface-2); color: var(--fg); font: 500 1rem var(--font-body);
+}
+.text-input::placeholder { color: var(--muted); opacity: 0.7; }
+.text-input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-color: var(--accent); }
+.hint { font-size: 0.8rem; color: var(--muted); margin-top: 6px; }
+.summary { margin: 20px 0 0; border-top: 1px solid var(--line); }
+.summary div { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 0.92rem; }
+.summary dt { color: var(--muted); }
+.summary dd { margin: 0; font-family: var(--font-mono); font-weight: 600; text-align: right; }
+.summary .total dd { color: var(--accent); font-size: 1.15rem; }
+.panel .btn { margin-top: 18px; }
+.fine { margin-top: 12px; font-size: 0.78rem; color: var(--muted); }
+
+/* Sections */
+section.block { padding-block: clamp(48px, 8vw, 96px); border-top: 1px solid var(--line); }
+.sec-head { max-width: 60ch; margin-bottom: clamp(26px, 4vw, 44px); }
+.sec-head h2 { font-family: var(--font-display); font-weight: 400; font-size: clamp(1.8rem, 3.8vw, 2.6rem); line-height: 1.12; text-wrap: balance; margin-top: 10px; }
+.sec-head p { margin-top: 12px; color: var(--muted); }
+
+.pack-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 14px; }
+.pack {
+  display: flex; flex-direction: column; gap: 4px; min-width: 0;
+  padding: 20px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface);
+  transition: border-color 0.15s;
+}
+.pack:hover { border-color: var(--accent); }
+.pack .robux { font-family: var(--font-mono); font-weight: 600; font-size: 1.9rem; line-height: 1.1; }
+.pack .unit { font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+.pack .price { font-size: 1.25rem; font-weight: 700; margin-top: 14px; }
+.pack .rate { font-size: 0.8rem; color: var(--muted); font-family: var(--font-mono); margin-bottom: 14px; }
+.pack .btn { margin-top: auto; }
+.note { margin-top: 18px; font-size: 0.85rem; color: var(--muted); max-width: 70ch; }
+
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; counter-reset: step; }
+@media (max-width: 960px) { .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .steps { grid-template-columns: minmax(0, 1fr); } }
+.steps li { counter-increment: step; padding: 22px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); min-width: 0; }
+.steps li::before { content: "0" counter(step); font-family: var(--font-mono); font-weight: 600; color: var(--accent); font-size: 0.95rem; }
+.steps h3 { font-size: 1.05rem; margin-top: 12px; font-weight: 700; }
+.steps p { margin-top: 6px; color: var(--muted); font-size: 0.92rem; }
+
+.faq { max-width: 760px; border-top: 1px solid var(--line); }
+.faq details { border-bottom: 1px solid var(--line); }
+.faq summary {
+  list-style: none; cursor: pointer; padding: 18px 40px 18px 0; position: relative;
+  font-weight: 600; font-size: 1.02rem;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; position: absolute; right: 4px; top: 50%; transform: translateY(-50%); font-family: var(--font-mono); font-size: 1.3rem; color: var(--accent); }
+.faq details[open] summary::after { content: "\2212"; }
+.faq details p { padding: 0 0 20px; color: var(--muted); max-width: 62ch; }
+
+.contact-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+@media (max-width: 700px) { .contact-grid { grid-template-columns: minmax(0, 1fr); } }
+.contact { padding: 24px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface); min-width: 0; }
+.contact .label { font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+.contact .value { margin-top: 8px; font-family: var(--font-mono); font-weight: 600; font-size: clamp(1.1rem, 2.6vw, 1.45rem); overflow-wrap: anywhere; user-select: all; }
+.contact .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 18px; }
+.status { font-size: 0.82rem; color: var(--accent); }
+
+.site-footer { border-top: 1px solid var(--line); padding-block: 32px 40px; color: var(--muted); font-size: 0.82rem; }
+.site-footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px 32px; }
+.site-footer p { max-width: 70ch; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; }
+}
+</style>
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Fourting Groud, ke atas">
+      <svg viewBox="0 0 32 32" aria-hidden="true">
+        <g transform="rotate(45 16 16)" fill="currentColor">
+          <rect x="6.5" y="6.5" width="9" height="9" rx="1.5" opacity="0.45"/>
+          <rect x="16.5" y="6.5" width="9" height="9" rx="1.5"/>
+          <rect x="6.5" y="16.5" width="9" height="9" rx="1.5"/>
+          <rect x="16.5" y="16.5" width="9" height="9" rx="1.5"/>
+        </g>
+      </svg>
+      <span>Fourting Groud</span>
+    </a>
+    <nav class="nav" aria-label="Menu utama">
+      <a class="link" href="#paket">Paket</a>
+      <a class="link" href="#cara">Cara order</a>
+      <a class="link" href="#faq">FAQ</a>
+      <a class="link" href="#kontak">Kontak</a>
+      <a class="btn small" id="wa-header" href="https://wa.me/6289667809564" target="_blank" rel="noopener">Chat admin</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">Toko Robux online</p>
+        <h1>Top up <em>Robux</em>, langsung lewat admin.</h1>
+        <p class="lede">Pilih paket, isi username Roblox, lalu kirim pesanan ke admin lewat WhatsApp. Harga dan cara pembayaran dikonfirmasi sebelum Anda membayar apa pun.</p>
+        <div class="cta-row">
+          <a class="btn" href="#pesan">Buat pesanan</a>
+          <a class="btn ghost" href="#paket">Lihat daftar paket</a>
+        </div>
+        <ul class="facts">
+          <li>Tanpa password akun</li>
+          <li>Harga dikonfirmasi dulu</li>
+          <li>Chat langsung dengan admin</li>
+        </ul>
+      </div>
+
+      <form class="panel" id="pesan" autocomplete="off">
+        <h2>Buat pesanan</h2>
+        <p class="sub">Pesan WhatsApp akan terisi otomatis.</p>
+
+        <span class="field-label" id="lbl-paket">Pilih paket</span>
+        <div class="chips" id="chips" role="radiogroup" aria-labelledby="lbl-paket"></div>
+
+        <label class="field-label" for="username">Username Roblox</label>
+        <input class="text-input" id="username" name="username" type="text" placeholder="Contoh: NamaAkunKamu" maxlength="40">
+        <p class="hint">Cukup username. Jangan pernah mengirim password.</p>
+
+        <dl class="summary">
+          <div><dt>Paket</dt><dd id="sum-pack">-</dd></div>
+          <div class="total"><dt>Perkiraan harga</dt><dd id="sum-price">-</dd></div>
+        </dl>
+
+        <a class="btn block" id="wa-order" href="https://wa.me/6289667809564" target="_blank" rel="noopener">Lanjut ke WhatsApp admin</a>
+        <p class="fine">Tombol membuka WhatsApp dengan pesan yang sudah terisi. Pesanan baru dianggap masuk setelah admin membalas.</p>
+      </form>
+    </div>
+  </section>
+
+  <section class="block" id="paket">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Daftar paket</p>
+        <h2>Pilih jumlah Robux sesuai kebutuhan.</h2>
+        <p>Semakin besar paket, semakin murah harga per 100 Robux.</p>
+      </div>
+      <div class="pack-grid" id="pack-grid"></div>
+      <p class="note">Harga di halaman ini adalah daftar awal. Admin mengonfirmasi harga final sebelum Anda melakukan pembayaran.</p>
+    </div>
+  </section>
+
+  <section class="block" id="cara">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Cara order</p>
+        <h2>Empat langkah dari pilih paket sampai Robux masuk.</h2>
+      </div>
+      <ol class="steps">
+        <li>
+          <h3>Pilih paket</h3>
+          <p>Tentukan jumlah Robux dan isi username Roblox Anda pada formulir pesanan.</p>
+        </li>
+        <li>
+          <h3>Kirim ke admin</h3>
+          <p>Tekan tombol WhatsApp. Pesan berisi paket dan username sudah terisi, tinggal dikirim.</p>
+        </li>
+        <li>
+          <h3>Konfirmasi dan bayar</h3>
+          <p>Admin membalas dengan harga final, metode pengiriman, dan cara pembayaran.</p>
+        </li>
+        <li>
+          <h3>Robux diproses</h3>
+          <p>Setelah pembayaran diterima, admin memproses pesanan dan mengabari Anda.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="block" id="faq">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Pertanyaan umum</p>
+        <h2>Sebelum Anda memesan.</h2>
+      </div>
+      <div class="faq">
+        <details>
+          <summary>Apakah saya perlu memberikan password akun?</summary>
+          <p>Tidak. Admin Fourting Groud tidak pernah meminta password. Jika ada yang meminta password atas nama kami, abaikan dan jangan berikan.</p>
+        </details>
+        <details>
+          <summary>Berapa lama pesanan diproses?</summary>
+          <p>Estimasi waktu disampaikan admin saat pesanan dikonfirmasi, karena bergantung pada metode pengiriman dan antrean saat itu.</p>
+        </details>
+        <details>
+          <summary>Pembayaran bisa lewat apa saja?</summary>
+          <p>Metode pembayaran yang tersedia diberikan admin lewat WhatsApp setelah Anda mengirim pesanan.</p>
+        </details>
+        <details>
+          <summary>Apakah Fourting Groud toko resmi Roblox?</summary>
+          <p>Bukan. Fourting Groud adalah toko independen dan tidak berafiliasi dengan Roblox Corporation. Roblox dan Robux adalah merek milik Roblox Corporation.</p>
+        </details>
+        <details>
+          <summary>Bagaimana jika ada masalah dengan pesanan?</summary>
+          <p>Hubungi admin lewat WhatsApp atau email di bagian kontak dan sertakan username serta paket yang dipesan.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="kontak">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Kontak admin</p>
+        <h2>Hubungi kami kapan pun Anda siap memesan.</h2>
+        <p>WhatsApp untuk pesanan dan pertanyaan cepat, email untuk keluhan atau urusan yang butuh penjelasan panjang.</p>
+      </div>
+      <div class="contact-grid">
+        <div class="contact">
+          <p class="label">WhatsApp admin</p>
+          <p class="value" id="wa-text">0896-6780-9564</p>
+          <div class="actions">
+            <a class="btn small" id="wa-contact" href="https://wa.me/6289667809564" target="_blank" rel="noopener">Chat di WhatsApp</a>
+            <button class="btn ghost small" type="button" data-copy="089667809564" data-target="wa-text">Salin nomor</button>
+            <span class="status" role="status" aria-live="polite"></span>
+          </div>
+        </div>
+        <div class="contact">
+          <p class="label">Email</p>
+          <p class="value" id="mail-text">faortinggroud@gmail.com</p>
+          <div class="actions">
+            <button class="btn ghost small" type="button" data-copy="faortinggroud@gmail.com" data-target="mail-text">Salin email</button>
+            <span class="status" role="status" aria-live="polite"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <p>Fourting Groud adalah toko independen dan tidak berafiliasi, didukung, atau disponsori oleh Roblox Corporation. Roblox dan Robux adalah merek dagang milik Roblox Corporation.</p>
+    <p>&copy; 2026 Fourting Groud</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var ADMIN_WA = "6289667809564";
+  /* Daftar harga: ubah angka p (rupiah) di sini untuk memperbarui seluruh halaman. */
+  var PACKS = [
+    { r: 80, p: 15000 },
+    { r: 400, p: 62000 },
+    { r: 800, p: 120000 },
+    { r: 1700, p: 250000 },
+    { r: 4500, p: 650000 },
+    { r: 10000, p: 1400000 }
+  ];
+  var selected = 2;
+
+  function rp(n) { return "Rp " + n.toLocaleString("id-ID"); }
+  function rb(n) { return n.toLocaleString("id-ID"); }
+
+  var chips = document.getElementById("chips");
+  var grid = document.getElementById("pack-grid");
+  var sumPack = document.getElementById("sum-pack");
+  var sumPrice = document.getElementById("sum-price");
+  var user = document.getElementById("username");
+  var waOrder = document.getElementById("wa-order");
+
+  chips.innerHTML = PACKS.map(function (k, i) {
+    return '<label class="chip"><input type="radio" name="paket" value="' + i + '"' + (i === selected ? " checked" : "") + '>' +
+      '<span class="amt">' + rb(k.r) + '</span><span class="prc">' + rp(k.p) + '</span></label>';
+  }).join("");
+
+  grid.innerHTML = PACKS.map(function (k, i) {
+    var per100 = Math.round(k.p / k.r * 100);
+    return '<div class="pack"><span class="robux">' + rb(k.r) + '</span><span class="unit">Robux</span>' +
+      '<span class="price">' + rp(k.p) + '</span><span class="rate">' + rp(per100) + ' / 100 Robux</span>' +
+      '<button class="btn ghost small" type="button" data-pick="' + i + '">Pilih paket</button></div>';
+  }).join("");
+
+  function update() {
+    var k = PACKS[selected];
+    sumPack.textContent = rb(k.r) + " Robux";
+    sumPrice.textContent = rp(k.p);
+    var name = user.value.trim();
+    var msg = [
+      "Halo admin Fourting Groud, saya mau order Robux.",
+      "",
+      "Paket: " + rb(k.r) + " Robux",
+      "Perkiraan harga: " + rp(k.p),
+      "Username Roblox: " + (name || "(belum diisi)"),
+      "",
+      "Mohon konfirmasi harga dan cara pembayarannya. Terima kasih."
+    ].join("\n");
+    waOrder.href = "https://wa.me/" + ADMIN_WA + "?text=" + encodeURIComponent(msg);
+  }
+
+  chips.addEventListener("change", function (e) {
+    if (e.target && e.target.name === "paket") { selected = Number(e.target.value); update(); }
+  });
+  user.addEventListener("input", update);
+  document.getElementById("pesan").addEventListener("submit", function (e) { e.preventDefault(); });
+
+  grid.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-pick]");
+    if (!b) return;
+    selected = Number(b.getAttribute("data-pick"));
+    var radio = chips.querySelector('input[value="' + selected + '"]');
+    if (radio) radio.checked = true;
+    update();
+    document.getElementById("pesan").scrollIntoView({ behavior: "smooth", block: "center" });
+  });
+
+  /* Salin kontak, dengan cadangan memilih teks jika clipboard ditolak */
+  document.querySelectorAll("[data-copy]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var status = btn.parentNode.querySelector(".status");
+      var text = btn.getAttribute("data-copy");
+      function done(msg) { if (status) { status.textContent = msg; setTimeout(function () { status.textContent = ""; }, 2500); } }
+      function fallback() {
+        var el = document.getElementById(btn.getAttribute("data-target"));
+        if (el) {
+          var range = document.createRange();
+          range.selectNodeContents(el);
+          var sel = window.getSelection();
+          sel.removeAllRanges();
+          sel.addRange(range);
+        }
+        done("Teks terpilih, salin manual");
+      }
+      try {
+        navigator.clipboard.writeText(text).then(function () { done("Tersalin"); }, fallback);
+      } catch (err) { fallback(); }
+    });
+  });
+
+  update();
+})();
+</script>
+
+</html>
+
+</body></html>
